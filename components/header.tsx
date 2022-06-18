@@ -8,7 +8,7 @@ const Header = styled.header`
   left: 0;
   width: 100%;
   z-index: 999px;
-  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.05);
   height: 3rem;
   padding: 1rem;
 `;
@@ -16,7 +16,7 @@ const Header = styled.header`
 const Nav = styled.nav`
   & a {
     text-transform: uppercase;
-    color: #464646;
+    color: var(--color-text-muted);
 
     &:hover {
       color: #262626;

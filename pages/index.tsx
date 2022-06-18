@@ -15,6 +15,14 @@ const Container = styled.div`
   background-color: #f2f2f2;
 `;
 
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, calc(340px + 1rem));
+  grid-gap: 1rem;
+  width: 100%;
+  max-width: calc(3 * (340px + 1rem) + 2rem); // Inlcudes 2 x gutter
+`;
+
 const Home: NextPage = () => {
   return (
     <>
@@ -26,7 +34,14 @@ const Home: NextPage = () => {
 
       <Layout>
         <Container>
-          <ImageCard src="ella/ella-105.jpg" caption="Ella" />
+          <Grid>
+            <ImageCard src="ella/ella-110.jpg" caption="Ella" />
+            <ImageCard src="ella/ella-110.jpg" caption="Ella" />
+            <ImageCard src="ella/ella-110.jpg" caption="Ella" />
+            <ImageCard src="ella/ella-110.jpg" caption="Ella" />
+            <ImageCard src="ella/ella-110.jpg" caption="Ella" />
+            <ImageCard src="ella/ella-110.jpg" caption="Ella" />
+          </Grid>
         </Container>
       </Layout>
     </>

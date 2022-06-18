@@ -1,5 +1,7 @@
 import Image, { ImageProps as NextImageProps } from "next/image";
 
+const IMAGE_KIT_URL = "https://ik.imagekit.io/mfimages";
+
 type ImageKitProps = {
   src: string;
   width?: number;
@@ -10,6 +12,7 @@ type ImageProps = {
   alt: string;
 } & NextImageProps;
 
+// Custom loader to fetch images from ImageKit
 const imageKitLoader = ({ src, width, quality }: ImageKitProps) => {
   if (src[0] === "/") src = src.slice(1);
   const params = [`w-${width}`];
@@ -17,11 +20,8 @@ const imageKitLoader = ({ src, width, quality }: ImageKitProps) => {
     params.push(`q-${quality}`);
   }
   const paramsString = params.join(",");
-  // FIXME: Move imagekit path to constant
-  let urlEndpoint = "https://ik.imagekit.io/mfimages/";
-  if (urlEndpoint[urlEndpoint.length - 1] === "/")
-    urlEndpoint = urlEndpoint.substring(0, urlEndpoint.length - 1);
-  return `${urlEndpoint}/${src}?tr=${paramsString}`;
+
+  return `${IMAGE_KIT_URL}/${src}?tr=${paramsString}`;
 };
 
 const ImageKit = (props: ImageProps) => {
