@@ -3,6 +3,7 @@ import Head from "next/head";
 import styled from "styled-components";
 import Layout from "../components/layout";
 import ImageCard from "../components/image-card";
+import GoogleBucket from "../services/GoogleBucket";
 
 const Container = styled.div`
   min-height: 100vh;
@@ -23,7 +24,13 @@ const Grid = styled.div`
   max-width: calc(3 * (340px + 1rem) + 2rem); // Inlcudes 2 x gutter
 `;
 
-const Home: NextPage = () => {
+type HomeProps = {
+  galleries?: string[];
+};
+
+const Home: NextPage = ({ galleries }: HomeProps) => {
+  console.log("🚀 ~ galleries", galleries); // FIXME:
+
   return (
     <>
       <Head>
@@ -48,26 +55,17 @@ const Home: NextPage = () => {
   );
 };
 
-// export async function getStaticProps() {
-//   // Call an external API endpoint to get posts
-//   const res = await fetch('https://.../posts')
-//   const posts = await res.json()
+export async function getStaticProps() {
+  // Call an external API endpoint to get posts
+  const bucket = new GoogleBucket("fairhurst-photo-gallery");
 
-//   // By returning { props: { posts } }, the Blog component
-//   // will receive `posts` as a prop at build time
-//   return {
-//     props: {
-//       posts,
-//     },
-//   }
-// }
+  const galleries = await bucket.listFolders();
 
-{
-  /* <img
-  srcset="https://ik.imagekit.io/mfimages/ella/ella-105.jpg?tr=w-300 300w,
-	  https://ik.imagekit.io/mfimages/ella/ella-105?tr=w-600 600w,
-    https://ik.imagekit.io/mfimages/ella/ella-105?tr=w-900 900w"
-  sizes="(max-width: 480px) 300px, 50vw" /> */
+  return {
+    props: {
+      galleries,
+    },
+  };
 }
 
 export default Home;
