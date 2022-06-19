@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Layout from "../components/layout";
 import ImageCard from "../components/image-card";
 import GoogleBucket from "../services/GoogleBucket";
+import { Gallery } from "../types/types";
 
 const Container = styled.div`
   min-height: 100vh;
@@ -25,12 +26,10 @@ const Grid = styled.div`
 `;
 
 type HomeProps = {
-  galleries?: string[];
+  galleries?: Gallery[];
 };
 
 const Home: NextPage = ({ galleries }: HomeProps) => {
-  console.log("🚀 ~ galleries", galleries); // FIXME:
-
   return (
     <>
       <Head>
@@ -42,12 +41,9 @@ const Home: NextPage = ({ galleries }: HomeProps) => {
       <Layout>
         <Container>
           <Grid>
-            <ImageCard src="ella/ella-110.jpg" caption="Ella" />
-            <ImageCard src="ella/ella-110.jpg" caption="Ella" />
-            <ImageCard src="ella/ella-110.jpg" caption="Ella" />
-            <ImageCard src="ella/ella-110.jpg" caption="Ella" />
-            <ImageCard src="ella/ella-110.jpg" caption="Ella" />
-            <ImageCard src="ella/ella-110.jpg" caption="Ella" />
+            {galleries?.map(({ folder, cover, caption }) => (
+              <ImageCard key={folder} src={cover} caption={caption || folder} />
+            ))}
           </Grid>
         </Container>
       </Layout>
@@ -58,8 +54,7 @@ const Home: NextPage = ({ galleries }: HomeProps) => {
 export async function getStaticProps() {
   // Call an external API endpoint to get posts
   const bucket = new GoogleBucket("fairhurst-photo-gallery");
-
-  const galleries = await bucket.listFolders();
+  const galleries = await bucket.getGalleries();
 
   return {
     props: {
