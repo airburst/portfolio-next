@@ -1,10 +1,10 @@
-import type { NextPage } from "next";
-import Head from "next/head";
-import styled from "styled-components";
-import Layout from "../components/layout";
-import ImageCard from "../components/image-card";
-import GoogleBucket from "../services/GoogleBucket";
-import { Gallery } from "../types/types";
+import type { NextPage } from 'next';
+import Head from 'next/head';
+import styled from 'styled-components';
+import Layout from '../components/layout';
+import ImageCard from '../components/image-card';
+import Photos from '../services/Photos';
+import { Gallery } from '../types/types';
 
 const Container = styled.div`
   min-height: 100vh;
@@ -52,9 +52,7 @@ const Home: NextPage = ({ galleries }: HomeProps) => {
 };
 
 export async function getStaticProps() {
-  // Call an external API endpoint to get posts
-  const bucket = new GoogleBucket("fairhurst-photo-gallery");
-  const galleries = await bucket.getGalleries();
+  const galleries: Gallery[] = await Photos.getGalleries();
 
   return {
     props: {

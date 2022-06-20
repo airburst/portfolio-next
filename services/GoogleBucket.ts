@@ -1,13 +1,13 @@
 // Imports the Google Cloud client library
 const { Storage } = require('@google-cloud/storage');
-import { Gallery } from "../types/types";
+import { Gallery } from '../types/types';
 
 class GoogleBucket {
   bucketName: string;
   storage: Storage;
 
   constructor(bucketName: string) {
-    this.storage = new Storage({ keyFilename: "service.json" });
+    this.storage = new Storage({ keyFilename: 'service.json' });
     this.bucketName = bucketName;
   }
 
@@ -16,16 +16,18 @@ class GoogleBucket {
     const [files] = await this.storage.bucket(this.bucketName).getFiles();
 
     return files
-      .filter((file: File) => file.name.endsWith("/"))
-      .map((file: File) => file.name.slice(0,-1))
+      .filter((file: File) => file.name.endsWith('/'))
+      .map((file: File) => file.name.slice(0, -1));
   }
 
-  async listFiles(folder = "") {
+  async listFiles(folder = '') {
     let options = undefined;
     if (folder) {
-      options = { prefix: `${folder}/`, delimiter: '/' }
+      options = { prefix: `${folder}/`, delimiter: '/' };
     }
-    const [files] = await this.storage.bucket(this.bucketName).getFiles(options);
+    const [files] = await this.storage
+      .bucket(this.bucketName)
+      .getFiles(options);
 
     return files.map((file: File) => file.name);
   }
@@ -36,7 +38,9 @@ class GoogleBucket {
 
     for (const folder of folders) {
       const files = await this.listFiles(folder);
-      const coverFile = files.find((file: string) => file.endsWith("cover.txt"));
+      const coverFile = files.find((file: string) =>
+        file.endsWith('cover.txt')
+      );
       if (coverFile) {
         const { cover, caption = null } = await this.getMetadata(coverFile);
 
@@ -57,24 +61,23 @@ class GoogleBucket {
         .getMetadata();
       return metadata.metadata;
     } catch (error: any) {
-      console.error("💢 ", error.message);
+      console.error('💢 ', error.message);
       return null;
     }
   }
 
   async setMetadata(fileName: string, meta: any) {
     try {
-    const [metadata] = await this.storage
-      .bucket(this.bucketName)
-      .file(fileName)
-      .setMetadata({ metadata: meta });
-    return metadata;
-  } catch (error: any) {
-    console.error("💢 ", error.message);
-    return null;
-  }
+      const [metadata] = await this.storage
+        .bucket(this.bucketName)
+        .file(fileName)
+        .setMetadata({ metadata: meta });
+      return metadata;
+    } catch (error: any) {
+      console.error('💢 ', error.message);
+      return null;
+    }
   }
 }
 
 export default GoogleBucket;
-
