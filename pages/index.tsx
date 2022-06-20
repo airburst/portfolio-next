@@ -19,10 +19,10 @@ const Container = styled.div`
 
 const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(3, calc(340px + 1rem));
+  grid-template-columns: repeat(3, 340px);
   grid-gap: 1rem;
   width: 100%;
-  max-width: calc(3 * (340px + 1rem) + 2rem); // Inlcudes 2 x gutter
+  max-width: calc(3 * 340px + 2rem); // Inlcudes 2 x gutter
 `;
 
 type HomeProps = {

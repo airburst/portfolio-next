@@ -11,12 +11,11 @@ type CardProps = {
 
 const Card = styled.div`
   background: #fff;
-  padding: 0.5rem;
   cursor: pointer;
-  box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.05);
+  box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.1);
 
   &:hover {
-    box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.16);
   }
 `;
 
@@ -30,7 +29,7 @@ const Caption = styled.div`
   display: flex;
   align-items: center;
   height: 3rem;
-  padding-top: 0.5rem;
+  padding: 0.5rem;
   text-transform: uppercase;
   color: var(--color-text-muted);
 `;
@@ -47,7 +46,7 @@ export default function ImageCard({
   return (
     <Card>
       <Link href={`/gallery/${folder}`}>
-        <a href={`/gallery/${folder}`}>
+        <a>
           <ImageWrapper>
             <Image
               src={src}
