@@ -1,14 +1,36 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
+import styled from 'styled-components';
+import Layout from '../../components/layout';
 import Photos from '../../services/Photos';
+import Image from '../../components/image';
 import { Gallery as GalleryType } from '../../types/types';
 
+const Container = styled.div`
+  min-height: 100vh;
+  padding: 4rem 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f2f2f2;
+`;
+
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, calc(340px + 1rem));
+  grid-gap: 1rem;
+  width: 100%;
+  max-width: calc(3 * (340px + 1rem) + 2rem); // Inlcudes 2 x gutter
+`;
+
+// TODO: Include caption in props
 type GalleryProps = {
   photos?: string[];
 };
 
 const Gallery: NextPage = ({ photos }: GalleryProps) => {
-  console.log('🚀 ~ file: [id].tsx ~ line 10 ~ photos', photos);
   return (
     <div>
       <Head>
@@ -17,7 +39,15 @@ const Gallery: NextPage = ({ photos }: GalleryProps) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>Gallery</main>
+      <Layout>
+        <Container>
+          <Grid>
+            {photos?.map((url: string) => (
+              <Image key={url} src={url} width={300} height={300} alt={url} />
+            ))}
+          </Grid>
+        </Container>
+      </Layout>
     </div>
   );
 };

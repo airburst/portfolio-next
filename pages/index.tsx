@@ -42,7 +42,12 @@ const Home: NextPage = ({ galleries }: HomeProps) => {
         <Container>
           <Grid>
             {galleries?.map(({ folder, cover, caption }) => (
-              <ImageCard key={folder} src={cover} caption={caption || folder} />
+              <ImageCard
+                key={folder}
+                src={cover}
+                caption={caption || folder}
+                folder={folder}
+              />
             ))}
           </Grid>
         </Container>

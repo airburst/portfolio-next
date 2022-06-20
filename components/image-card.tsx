@@ -1,8 +1,10 @@
-import styled from "styled-components";
-import Image from "../components/image";
+import styled from 'styled-components';
+import Link from 'next/link';
+import Image from '../components/image';
 
 type CardProps = {
   src: string;
+  folder: string;
   caption?: string;
   galleryId?: string;
 };
@@ -38,26 +40,30 @@ const Caption = styled.div`
 // needs width to fetch a smaller version.
 export default function ImageCard({
   src,
-  caption = "No caption provided",
-  galleryId,
+  folder,
+  caption = 'No caption provided',
 }: CardProps) {
   // TODO: Add link to `/gallery/${galleryId}`
   return (
     <Card>
-      <ImageWrapper>
-        <Image
-          src={src}
-          alt={caption}
-          width={340}
-          layout="fill"
-          objectFit="cover"
-          objectPosition="center top"
-          placeholder="empty"
-          sizes="340px"
-          priority
-        />
-      </ImageWrapper>
-      <Caption>{caption}</Caption>
+      <Link href={`/gallery/${folder}`}>
+        <a href={`/gallery/${folder}`}>
+          <ImageWrapper>
+            <Image
+              src={src}
+              alt={caption}
+              width={340}
+              layout="fill"
+              objectFit="cover"
+              objectPosition="center top"
+              placeholder="empty"
+              sizes="340px"
+              priority
+            />
+          </ImageWrapper>
+          <Caption>{caption}</Caption>
+        </a>
+      </Link>
     </Card>
   );
 }
